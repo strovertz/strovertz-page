@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gleison Pires | Cloud Solutions Architect & MSc Student @ USP</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vice: {
+                            bg: '#0a0614',
+                            darker: '#05020a',
+                            card: 'rgba(20, 12, 40, 0.65)',
+                            header: 'rgba(25, 14, 50, 0.85)',
+                            pink: '#ff007f',
+                            cyan: '#00f3ff',
+                            purple: '#9d4edd',
+                            amber: '#ff7e5f',
+                            yellow: '#ffea00',
+                            glassBorder: 'rgba(255, 255, 255, 0.12)',
+                            neonBorder: 'rgba(255, 0, 127, 0.4)'
+                        }
+                    },
+                    fontFamily: {
+                        synth: ['Orbitron', 'sans-serif'],
+                        head: ['Rajdhani', 'sans-serif'],
+                        code: ['Fira Code', 'monospace'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #0a0614;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(255, 0, 127, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 60%, rgba(0, 243, 255, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 90%, rgba(157, 78, 221, 0.15) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Clean Glassmorphism Window Styling */
+        .glass-window {
+            background: rgba(18, 12, 40, 0.70);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-top: 1px solid rgba(255, 0, 127, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-window:hover {
+            border-color: rgba(0, 243, 255, 0.5);
+            box-shadow: 0 25px 60px rgba(0, 243, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Vice City Retro Sun */
+                /* Vice City Retro Sun */
+        .vice-sun {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(to bottom, #ffea00 0%, #ff7e5f 30%, #ff007f 65%, #b0007f 90%, #3a0066 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 80px rgba(255, 126, 95, 0.9), 0 0 150px rgba(255, 0, 127, 0.6), 0 0 200px rgba(255, 234, 0, 0.3);
+            position: relative;
+            mask-image: linear-gradient(to bottom, 
+                #000 0%, #000 42%, 
+                transparent 42%, transparent 45%, 
+                #000 45%, #000 54%, 
+                transparent 54%, transparent 58%, 
+                #000 58%, #000 65%, 
+                transparent 65%, transparent 70%, 
+                #000 70%, #000 76%, 
+                transparent 76%, transparent 82%, 
+                #000 82%, #000 100%);
+            -webkit-mask-image: linear-gradient(to bottom, 
+                #000 0%, #000 42%, 
+                transparent 42%, transparent 45%, 
+                #000 45%, #000 54%, 
+                transparent 54%, transparent 58%, 
+                #000 58%, #000 65%, 
+                transparent 65%, transparent 70%, 
+                #000 70%, #000 76%, 
+                transparent 76%, transparent 82%, 
+                #000 82%, #000 100%);
+            animation: sunGlow 4s infinite alternate;
+        }
+
+        @keyframes sunGlow {
+            0% { box-shadow: 0 0 80px rgba(255, 126, 95, 0.9), 0 0 150px rgba(255, 0, 127, 0.6); }
+            100% { box-shadow: 0 0 100px rgba(255, 126, 95, 1), 0 0 180px rgba(255, 0, 127, 0.8); }
+        }
+
+        .window-glow-yellow { fill: #ffea00; animation: windowPulse 4s infinite ease-in-out; }
+        .window-glow-cyan { fill: #00f3ff; animation: windowPulse 5s infinite ease-in-out 1s; }
+        .window-glow-pink { fill: #ff007f; animation: windowPulse 3.5s infinite ease-in-out 2s; }
+
+        /* Water Reflection Wave Animation */
+        @keyframes waveShimmer {
+            0% { transform: translateX(0) scaleY(1); opacity: 0.6; }
+            50% { transform: translateX(15px) scaleY(1.2); opacity: 0.9; }
+            100% { transform: translateX(0) scaleY(1); opacity: 0.6; }
+        }
+
+        .water-wave {
+            animation: waveShimmer 6s infinite ease-in-out;
+        }
+
+        /* Neon Glow Effects */
+        .neon-text-pink {
+            color: #ff007f;
+            text-shadow: 0 0 12px rgba(255, 0, 127, 0.6);
+        }
+
+        .neon-text-cyan {
+            color: #00f3ff;
+            text-shadow: 0 0 12px rgba(0, 243, 255, 0.6);
+        }
+
+        /* Glass Buttons */
+        .btn-vice {
+            background: linear-gradient(135deg, rgba(255, 0, 127, 0.85), rgba(157, 78, 221, 0.85));
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-vice:hover {
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.9), rgba(255, 0, 127, 0.9));
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .btn-vice-outline {
+            background: rgba(18, 12, 40, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 243, 255, 0.6);
+            color: #00f3ff;
+            transition: all 0.3s ease;
+        }
+
+        .btn-vice-outline:hover {
+            background: rgba(0, 243, 255, 0.15);
+            color: #ffffff;
+            border-color: #ff007f;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Subtle scanline overlay */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+            background-size: 100% 4px;
+            z-index: 99;
+            opacity: 0.15;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0614; }
+        ::-webkit-scrollbar-thumb { background: #ff007f; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00f3ff; }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-vice-pink selection:text-white">
+
+    <!-- Scanline Subtle Layer -->
+    <div class="scanlines"></div>
+
+    <!-- Glass Header Navbar -->
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-vice-header border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo (Clean Gleison Pires) -->
+            <a href="#hero" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-vice-pink via-vice-purple to-vice-cyan p-0.5 shadow-[0_0_15px_rgba(255,0,127,0.4)] group-hover:shadow-[0_0_20px_rgba(0,243,255,0.8)] transition-all">
+                    <div class="w-full h-full bg-vice-bg rounded-[10px] flex items-center justify-center">
+                        <i class="fa-brands fa-linux text-vice-cyan text-lg group-hover:rotate-12 transition-transform"></i>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-synth font-extrabold text-lg sm:text-xl tracking-wider text-white">
+                        GLEISON <span class="neon-text-pink">PIRES</span>
+                    </span>
+                    <span class="text-[10px] font-mono text-vice-cyan tracking-widest uppercase">Cloud Architect • USP</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="hidden lg:flex items-center space-x-6 text-xs font-head tracking-widest uppercase font-semibold">
+                <a href="#about" class="text-gray-300 hover:text-vice-cyan transition-colors" data-i18n="nav_about">About</a>
+                <a href="#certifications" class="text-gray-300 hover:text-vice-cyan transition-colors" data-i18n="nav_certs">Certifications</a>
+                <a href="#specialties" class="text-gray-300 hover:text-vice-cyan transition-colors" data-i18n="nav_specialties">Specialties</a>
+                <a href="#journey" class="text-gray-300 hover:text-vice-cyan transition-colors" data-i18n="nav_journey">Journey</a>
+                <a href="#awards" class="text-gray-300 hover:text-vice-cyan transition-colors" data-i18n="nav_awards">Awards</a>
+                <a href="#photography" class="text-gray-300 hover:text-vice-cyan transition-colors" data-i18n="nav_gallery">Photography</a>
+                <a href="#terminal" class="text-gray-300 hover:text-vice-cyan transition-colors" data-i18n="nav_terminal">Terminal</a>
+            </nav>
+
+            <!-- Language Switcher & Contact Button -->
+            <div class="flex items-center space-x-4">
+                <!-- Language Toggle Button -->
+                <button id="langToggleBtn" onclick="toggleLanguage()" class="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-vice-cyan/50 bg-vice-bg/80 text-xs font-mono text-vice-cyan hover:border-vice-pink hover:text-vice-pink transition-all shadow-[0_0_12px_rgba(0,243,255,0.2)]">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="currentLangLabel">EN</span>
+                </button>
+
+                <!-- Contact CTA Button -->
+                <a href="#contact" class="hidden sm:inline-flex btn-vice px-4 py-2 rounded-xl text-xs font-synth uppercase tracking-wider font-semibold">
+                    <span data-i18n="nav_contact">Contact Me</span>
+                </a>
+
+                <!-- Mobile Hamburger Toggle -->
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden text-gray-300 hover:text-vice-pink text-2xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-vice-bg/95 backdrop-blur-2xl border-b border-vice-pink/30 px-6 pt-3 pb-6 space-y-3 font-head uppercase text-sm tracking-widest">
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-vice-cyan py-1" data-i18n="nav_about">About</a>
+            <a href="#certifications" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-vice-cyan py-1" data-i18n="nav_certs">Certifications</a>
+            <a href="#specialties" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-vice-cyan py-1" data-i18n="nav_specialties">Specialties</a>
+            <a href="#journey" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-vice-cyan py-1" data-i18n="nav_journey">Journey</a>
+            <a href="#awards" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-vice-cyan py-1" data-i18n="nav_awards">Awards</a>
+            <a href="#photography" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-vice-cyan py-1" data-i18n="nav_gallery">Photography</a>
+            <a href="#terminal" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-vice-cyan py-1" data-i18n="nav_terminal">Terminal</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-vice-pink hover:text-vice-cyan py-1 font-bold" data-i18n="nav_contact">Contact Me</a>
+        </div>
+    </header>
+
+        <!-- Hero Section with Vice Sunset Background Canvas, Cityscape with Lit Apartment Windows, Ocean Reflections & Glass Desktop Window -->
+        <!-- Hero Section with Cinematic Vice City Background -->
+        <!-- Hero Section with Cinematic Vice City Background -->
+        <!-- Hero Section with Cinematic Vice City Background -->
+    <section id="hero" class="relative min-h-[calc(100vh-5rem)] flex items-center justify-center pt-8 pb-16 px-4 overflow-hidden">
+        
+        <!-- Background SVG Completo (Preenchendo toda a tela com água) -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <svg class="w-full h-full object-cover" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Céu Gradiente -->
+                    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#2a0845"/>
+                        <stop offset="35%" stop-color="#a21c76"/>
+                        <stop offset="65%" stop-color="#e8416e"/>
+                        <stop offset="85%" stop-color="#fc8b5c"/>
+                        <stop offset="100%" stop-color="#ffd074"/>
+                    </linearGradient>
+
+                    <!-- Água Gradiente (Termina na cor exata do fundo do site: #0a0614) -->
+                    <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#4a1038"/>
+                        <stop offset="20%" stop-color="#1f0519"/>
+                        <stop offset="60%" stop-color="#0d0210"/>
+                        <stop offset="100%" stop-color="#0a0614"/>
+                    </linearGradient>
+
+                    <!-- Reflexo do Sol na Água -->
+                    <linearGradient id="sunReflection" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#ffd074" stop-opacity="0.9"/>
+                        <stop offset="30%" stop-color="#fc8b5c" stop-opacity="0.6"/>
+                        <stop offset="100%" stop-color="#e8416e" stop-opacity="0"/>
+                    </linearGradient>
+
+                    <!-- Filtro de Brilho Suave para o Sol -->
+                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="12" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                    <filter id="glowIntense" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="30" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                </defs>
+
+                <!-- 1. Céu (Termina no horizonte em y=450) -->
+                <rect x="0" y="0" width="1440" height="450" fill="url(#skyGrad)"/>
+
+                <!-- 2. Sol -->
+                <circle cx="180" cy="400" r="120" fill="#ffd074" opacity="0.4" filter="url(#glowIntense)"/>
+                <circle cx="180" cy="400" r="35" fill="#fff5d1" filter="url(#glow)"/>
+
+                <!-- 3. Skyline da Cidade -->
+                <g fill="#a2266d" opacity="0.6">
+                    <path d="M0,450 L0,350 L40,350 L40,320 L70,320 L70,390 L110,390 L110,330 L140,330 L140,360 L180,360 L180,300 L210,300 L210,280 L230,280 L230,320 L260,320 L260,360 L310,360 L310,310 L340,310 L340,280 L370,280 L370,330 L420,330 L420,370 L480,370 L480,290 L520,290 L520,250 L550,250 L550,310 L590,310 L590,350 L640,350 L640,270 L680,270 L680,230 L710,230 L710,260 L740,260 L740,320 L780,320 L780,360 L830,360 L830,280 L870,280 L870,240 L900,240 L900,290 L940,290 L940,330 L990,330 L990,260 L1030,260 L1030,220 L1060,220 L1060,270 L1100,270 L1100,320 L1150,320 L1150,350 L1200,350 L1200,290 L1240,290 L1240,260 L1280,260 L1280,310 L1320,310 L1320,340 L1380,340 L1380,320 L1420,320 L1420,350 L1440,350 L1440,450 Z"/>
+                </g>
+
+                <g fill="#4d1142">
+                    <path d="M0,450 L0,370 L50,370 L50,330 L90,330 L90,390 L150,390 L150,320 L190,320 L190,300 L220,300 L220,340 L280,340 L280,370 L330,370 L330,310 L380,310 L380,280 L420,280 L420,330 L470,330 L470,380 L520,380 L520,290 L560,290 L560,250 L590,250 L590,300 L650,300 L650,360 L700,360 L700,270 L730,270 L730,230 L760,230 L760,260 L810,260 L810,330 L860,330 L860,280 L910,280 L910,240 L940,240 L940,290 L1000,290 L1000,350 L1050,350 L1050,270 L1090,270 L1090,230 L1120,230 L1120,280 L1180,280 L1180,340 L1230,340 L1230,290 L1270,290 L1270,260 L1310,260 L1310,310 L1370,310 L1370,350 L1440,350 L1440,450 Z"/>
+                </g>
+
+                <!-- Janelas Clássicas (Amarelas) -->
+                <g fill="#ffea00" opacity="0.85">
+                    <rect x="60" y="350" width="4" height="6"/><rect x="75" y="350" width="4" height="6"/><rect x="60" y="370" width="4" height="6"/>
+                    <rect x="100" y="350" width="4" height="6"/><rect x="115" y="350" width="4" height="6"/><rect x="100" y="370" width="4" height="6"/>
+                    <rect x="160" y="340" width="4" height="6"/><rect x="175" y="340" width="4" height="6"/><rect x="160" y="360" width="4" height="6"/>
+                    <rect x="200" y="320" width="4" height="6"/><rect x="200" y="340" width="4" height="6"/>
+                    <rect x="240" y="350" width="4" height="6"/><rect x="255" y="350" width="4" height="6"/>
+                    <rect x="350" y="330" width="4" height="6"/><rect x="365" y="330" width="4" height="6"/>
+                    <rect x="400" y="320" width="4" height="6"/><rect x="400" y="340" width="4" height="6"/>
+                    <rect x="440" y="350" width="4" height="6"/><rect x="455" y="350" width="4" height="6"/>
+                    <rect x="530" y="310" width="4" height="6"/><rect x="545" y="310" width="4" height="6"/><rect x="530" y="330" width="4" height="6"/>
+                    <rect x="570" y="270" width="4" height="8"/><rect x="585" y="270" width="4" height="8"/><rect x="570" y="290" width="4" height="8"/>
+                    <rect x="600" y="320" width="4" height="6"/><rect x="615" y="320" width="4" height="6"/>
+                    <rect x="710" y="250" width="5" height="8"/><rect x="725" y="250" width="5" height="8"/><rect x="740" y="250" width="5" height="8"/>
+                    <rect x="710" y="270" width="5" height="8"/><rect x="725" y="270" width="5" height="8"/><rect x="740" y="270" width="5" height="8"/>
+                    <rect x="710" y="290" width="5" height="8"/><rect x="740" y="290" width="5" height="8"/><rect x="710" y="320" width="5" height="8"/>
+                    <rect x="780" y="290" width="4" height="6"/><rect x="795" y="290" width="4" height="6"/><rect x="780" y="310" width="4" height="6"/>
+                    <rect x="830" y="300" width="4" height="6"/><rect x="845" y="300" width="4" height="6"/><rect x="830" y="320" width="4" height="6"/>
+                    <rect x="880" y="260" width="4" height="6"/><rect x="895" y="260" width="4" height="6"/><rect x="880" y="280" width="4" height="6"/>
+                    <rect x="920" y="310" width="4" height="6"/><rect x="935" y="310" width="4" height="6"/>
+                    <rect x="1010" y="290" width="4" height="6"/><rect x="1025" y="290" width="4" height="6"/><rect x="1010" y="310" width="4" height="6"/>
+                    <rect x="1070" y="250" width="4" height="6"/><rect x="1085" y="250" width="4" height="6"/><rect x="1070" y="270" width="4" height="6"/>
+                    <rect x="1140" y="300" width="4" height="6"/><rect x="1155" y="300" width="4" height="6"/><rect x="1140" y="320" width="4" height="6"/>
+                    <rect x="1190" y="310" width="4" height="6"/><rect x="1205" y="310" width="4" height="6"/>
+                    <rect x="1240" y="300" width="4" height="6"/><rect x="1255" y="300" width="4" height="6"/>
+                    <rect x="1290" y="280" width="4" height="6"/><rect x="1290" y="300" width="4" height="6"/>
+                    <rect x="1330" y="330" width="4" height="6"/><rect x="1345" y="330" width="4" height="6"/><rect x="1380" y="330" width="4" height="6"/>
+                </g>
+
+                <!-- 4. Oceano (Do horizonte y=450 até o final y=800) -->
+                <g id="ocean">
+                    <rect x="0" y="450" width="1440" height="350" fill="url(#waterGrad)"/>
+                    
+                    <!-- Linha do Horizonte -->
+                    <line x1="0" y1="450" x2="1440" y2="450" stroke="#fc8b5c" stroke-width="2" opacity="0.6" filter="url(#glow)"/>
+                    
+                    <!-- Reflexo Central do Sol -->
+                    <polygon points="150,450 230,450 450,800 0,800" fill="url(#sunReflection)" />
+                    
+                    <!-- Ondulações e Linhas de Reflexo -->
+                    <g class="water-wave">
+                        <line x1="130" y1="460" x2="260" y2="460" stroke="#ffd074" stroke-width="2" opacity="0.9"/>
+                        <line x1="110" y1="475" x2="290" y2="475" stroke="#ffea00" stroke-width="3" opacity="0.8"/>
+                        <line x1="80" y1="495" x2="330" y2="495" stroke="#fc8b5c" stroke-width="4" opacity="0.6"/>
+                        <line x1="40" y1="520" x2="380" y2="520" stroke="#e8416e" stroke-width="6" opacity="0.4"/>
+                        <line x1="0" y1="555" x2="430" y2="555" stroke="#e8416e" stroke-width="8" opacity="0.3"/>
+                        
+                        <!-- Linhas Secundárias -->
+                        <line x1="400" y1="470" x2="700" y2="470" stroke="#a21c76" stroke-width="2" opacity="0.4"/>
+                        <line x1="800" y1="485" x2="1200" y2="485" stroke="#a21c76" stroke-width="3" opacity="0.3"/>
+                        <line x1="300" y1="505" x2="1100" y2="505" stroke="#e8416e" stroke-width="2" opacity="0.3"/>
+                        <line x1="150" y1="540" x2="1300" y2="540" stroke="#4d1142" stroke-width="5" opacity="0.5"/>
+                        
+                        <!-- Linhas Profundas (Preenchendo o final da tela) -->
+                        <line x1="0" y1="600" x2="1440" y2="600" stroke="#e8416e" stroke-width="4" opacity="0.2"/>
+                        <line x1="-100" y1="680" x2="1540" y2="680" stroke="#a21c76" stroke-width="6" opacity="0.15"/>
+                        <line x1="-200" y1="760" x2="1640" y2="760" stroke="#2a0622" stroke-width="8" opacity="0.4"/>
+                    </g>
+                </g>
+
+                <!-- 5. Primeiro Plano (Apenas as palmeiras e um pedaço mínimo de terra para apoiá-las) -->
+                <g fill="#0b0214">
+                    <!-- Terra esquerda -->
+                    <path d="M0,790 Q 50,770 150,800 L0,800 Z"/>
+                    <!-- Terra direita -->
+                    <path d="M1440,790 Q 1350,770 1250,800 L1440,800 Z"/>
+
+                    <!-- Arbustos -->
+                    <path d="M 300,800 Q 320,760 350,790 Q 380,750 400,800 Z"/>
+                    <path d="M 700,800 Q 720,770 750,790 Q 780,760 800,810 Z"/>
+                    <path d="M 1100,800 Q 1130,760 1160,800 Q 1190,770 1220,810 Z"/>
+
+                    <!-- Palmeiras Esquerda -->
+                    <path d="M 80,800 Q 100,600 120,300 L 130,300 Q 110,600 95,800 Z"/>
+                    <path d="M 125,300 C 80,250 20,250 -20,280 C 30,280 80,280 125,300 Z"/>
+                    <path d="M 125,300 C 90,200 40,170 -10,180 C 30,210 80,240 125,300 Z"/>
+                    <path d="M 125,300 C 160,210 220,190 270,210 C 210,220 170,250 125,300 Z"/>
+                    <path d="M 125,300 C 180,270 240,270 280,300 C 220,300 170,300 125,300 Z"/>
+                    <path d="M 125,300 C 160,340 190,370 220,410 C 180,380 150,350 125,300 Z"/>
+
+                    <path d="M 40,800 Q 80,650 100,450 L 110,450 Q 90,650 55,800 Z"/>
+                    <path d="M 105,450 C 60,410 10,410 -20,440 C 20,440 70,440 105,450 Z"/>
+                    <path d="M 105,450 C 110,380 150,350 190,360 C 150,380 120,410 105,450 Z"/>
+                    <path d="M 105,450 C 140,430 180,440 200,470 C 160,470 130,460 105,450 Z"/>
+
+                    <!-- Palmeiras Direita -->
+                    <path d="M 1360,800 Q 1320,550 1280,250 L 1270,250 Q 1310,550 1345,800 Z"/>
+                    <path d="M 1275,250 C 1320,200 1380,200 1420,230 C 1370,230 1320,230 1275,250 Z"/>
+                    <path d="M 1275,250 C 1310,150 1360,120 1410,130 C 1370,160 1320,190 1275,250 Z"/>
+                    <path d="M 1275,250 C 1240,160 1180,140 1130,160 C 1190,170 1230,200 1275,250 Z"/>
+                    <path d="M 1275,250 C 1220,220 1160,220 1120,250 C 1180,250 1230,250 1275,250 Z"/>
+                    <path d="M 1275,250 C 1240,290 1210,320 1180,360 C 1220,330 1250,300 1275,250 Z"/>
+
+                    <path d="M 1420,800 Q 1380,650 1350,400 L 1340,400 Q 1370,650 1400,800 Z"/>
+                    <path d="M 1345,400 C 1390,350 1430,350 1460,380 C 1420,380 1370,380 1345,400 Z"/>
+                    <path d="M 1345,400 C 1330,320 1280,290 1230,300 C 1280,320 1310,350 1345,400 Z"/>
+                    <path d="M 1345,400 C 1300,380 1250,390 1220,420 C 1270,420 1310,410 1345,400 Z"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- O restante do seu conteúdo Hero (textos e card) começa aqui -->
+        <div class="relative z-10 max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <!-- Hero Left Side Info -->
+            <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                                <!-- Location & Badge (Vidro Fosco Clássico) -->
+                <div class="inline-flex items-center space-x-2.5 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-white text-xs font-mono font-bold tracking-wide shadow-[0_8px_32px_rgba(0,0,0,0.37)] hover:bg-white/20 transition-all duration-300">
+                    <i class="fa-solid fa-location-dot text-vice-pink animate-pulse drop-shadow-[0_0_8px_rgba(255,0,127,0.8)]"></i>
+                    <span class="drop-shadow-md">São Paulo, Brasil</span>
+                    <span class="text-vice-cyan font-black">•</span>
+                    <span class="text-vice-yellow drop-shadow-md" data-i18n="hero_status_tag">MSc @ USP ICMC</span>
+                </div>
+
+                <!-- Main Name -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-synth font-black tracking-tight text-white uppercase leading-none drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)]">
+                    GLEISON <span class="neon-text-pink">PIRES</span>
+                </h1>
+
+                <!-- Professional Subtitle -->
+                <p class="text-lg sm:text-2xl font-head font-bold text-vice-cyan tracking-wide leading-snug drop-shadow-md" data-i18n="hero_subtitle">
+                    Cloud Solutions Architect & DevSecOps Engineer | MSc Student @ USP
+                </p>
+
+                <!-- Description -->
+                <p class="text-gray-200 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto lg:mx-0 font-sans drop-shadow" data-i18n="hero_desc">
+                    Specialized in multi-cloud architecture (AWS, GCP, Azure, OCI), DevSecOps automation pipelines, High-Performance Computing (HPC), and FinOps cost optimization. AWS User Group Leader passionate about photography & Vice City dusk vibes.
+                </p>
+
+                <!-- Action CTAs -->
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#certifications" class="btn-vice px-6 py-3 rounded-xl font-synth text-xs font-bold tracking-wider uppercase flex items-center space-x-2">
+                        <i class="fa-solid fa-award"></i>
+                        <span data-i18n="hero_btn_certs">View 6x Certifications</span>
+                    </a>
+                    <a href="https://linkedin.com/in/gleisonpires/" target="_blank" rel="noopener noreferrer" class="btn-vice-outline px-6 py-3 rounded-xl font-synth text-xs font-bold tracking-wider uppercase flex items-center space-x-2">
+                        <i class="fa-brands fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://builder.aws.com/community/@strovertzz" target="_blank" rel="noopener noreferrer" class="btn-vice-outline px-6 py-3 rounded-xl font-synth text-xs font-bold tracking-wider uppercase flex items-center space-x-2">
+                        <i class="fa-brands fa-aws text-vice-yellow"></i>
+                        <span>AWS Builder</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Glass Window Card: Tux Linux Vice City Coder Avatar with Dedicated GIF Image Container -->
+            <div class="lg:col-span-5">
+                <div class="glass-window rounded-2xl overflow-hidden shadow-2xl">
+                    <!-- Glass Window Titlebar Header -->
+                    <div class="bg-vice-darker/85 px-4 py-3 flex items-center justify-between border-b border-white/10">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500 inline-block shadow-[0_0_8px_#ef4444]"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block shadow-[0_0_8px_#eab308]"></span>
+                            <span class="w-3 h-3 rounded-full bg-cyan-400 inline-block shadow-[0_0_8px_#06b6d4]"></span>
+                        </div>
+                        <div class="text-gray-300 font-code text-xs flex items-center space-x-2">
+                            <i class="fa-solid fa-terminal text-vice-pink text-xs"></i>
+                            <span>~/gleison/tux-avatar.gif</span>
+                        </div>
+                        <span class="text-vice-cyan text-xs font-mono">v1988.04</span>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-6 space-y-5 text-gray-200">
+                        <!-- Custom AI GIF Container -->
+                        <div class="relative rounded-xl overflow-hidden bg-gradient-to-br from-vice-pink/20 via-vice-purple/30 to-vice-cyan/20 border border-white/10 p-6 flex flex-col items-center text-center">
+                            
+                            <!-- AI GIF Avatar Image Element with Fallback Handler -->
+                            <div class="relative w-32 h-32 rounded-full overflow-hidden bg-vice-darker/90 border-2 border-vice-pink flex items-center justify-center shadow-[0_0_30px_rgba(255,0,127,0.6)] mb-3 group">
+                                <img id="tuxGif" src="./penguim.gif" alt="Penguin Hacker GIF" 
+                                     onerror="this.onerror=null; this.src='./penguim.gif';" 
+                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            </div>
+
+                            <h3 class="font-synth text-lg font-bold text-white">Gleison Pires</h3>
+                            <p class="text-xs font-mono text-vice-cyan" data-i18n="tux_card_role">DevSecOps Architect & Researcher</p>
+                            
+                            <!-- Key Badges -->
+                            <div class="flex flex-wrap gap-2 justify-center mt-3 font-mono text-[11px]">
+                                <span class="px-2.5 py-1 rounded-full bg-vice-pink/20 text-vice-pink border border-vice-pink/40">5x AWS Certified</span>
+                                <span class="px-2.5 py-1 rounded-full bg-vice-cyan/20 text-vice-cyan border border-vice-cyan/40">GCP DevOps Pro</span>
+                                <span class="px-2.5 py-1 rounded-full bg-vice-yellow/20 text-vice-yellow border border-vice-yellow/40">USP MSc Student</span>
+                            </div>
+                        </div>
+
+                        <!-- System Specs List -->
+                        <div class="space-y-2 font-mono text-xs text-gray-300">
+                            <div class="flex justify-between py-1 border-b border-white/5">
+                                <span class="text-gray-400"><i class="fa-solid fa-graduation-cap text-vice-pink mr-2"></i>Degree:</span>
+                                <span class="text-white font-semibold">MSc Student @ USP ICMC</span>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-white/5">
+                                <span class="text-gray-400"><i class="fa-solid fa-building text-vice-cyan mr-2"></i>Role:</span>
+                                <span class="text-white font-semibold">Senior Architect @ Compass UOL</span>
+                            </div>
+                            <div class="flex justify-between py-1 border-b border-white/5">
+                                <span class="text-gray-400"><i class="fa-solid fa-plane text-vice-yellow mr-2"></i>Grant:</span>
+                                <span class="text-vice-yellow font-semibold">AWS re:Invent 2025 Las Vegas</span>
+                            </div>
+                            <div class="flex justify-between py-1">
+                                <span class="text-gray-400"><i class="fa-solid fa-users text-vice-purple mr-2"></i>Community:</span>
+                                <span class="text-white font-semibold">AWS User Group Leader</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Certifications Showcase (Explicitly highlighting 5x AWS & 1x GCP) -->
+    <section id="certifications" class="py-20 px-4 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-vice-cyan uppercase" data-i18n="sec_certs_tag">01. VALIDATED EXCELLENCE</h2>
+                <h3 class="text-3xl sm:text-5xl font-synth font-black text-white uppercase tracking-tight">
+                    CLOUD <span class="neon-text-pink">CERTIFICATIONS</span>
+                </h3>
+                <p class="text-gray-400 text-sm max-w-xl mx-auto font-sans" data-i18n="certs_subtitle">
+                    5x AWS Certified & GCP DevOps Professional certified, validating expertise across multi-cloud infrastructure & operations.
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-vice-pink to-vice-cyan mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Spotlight Top Row (5x AWS Spotlight + 1x GCP Spotlight) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <!-- AWS Spotlight Box -->
+                <div class="glass-window p-6 rounded-2xl border-l-4 border-l-vice-yellow flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/50 flex items-center justify-center text-amber-400 text-2xl">
+                                    <i class="fa-brands fa-aws"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-head font-bold text-white">AWS Certifications</h4>
+                                    <span class="text-xs font-mono text-amber-400 font-bold">5 RECOGNIZED CREDENTIALS</span>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400 text-amber-300 font-synth text-xs font-bold">5x AWS</span>
+                        </div>
+                        
+                        <div class="space-y-2 pt-2">
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-white">AWS Certified Solutions Architect - Professional</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">PRO</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-white">AWS Certified DevOps Engineer - Professional</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">PRO</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-300">AWS Certified SysOps Administrator - Associate</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-vice-cyan/20 text-vice-cyan">ASSOC</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-300">AWS Certified Solutions Architect - Associate</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-vice-cyan/20 text-vice-cyan">ASSOC</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-300">AWS Certified Cloud Practitioner</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-gray-500/20 text-gray-300">FOUND</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GCP & Multi-Cloud Spotlight Box -->
+                <div class="glass-window p-6 rounded-2xl border-l-4 border-l-vice-cyan flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 rounded-xl bg-vice-cyan/20 border border-vice-cyan/50 flex items-center justify-center text-vice-cyan text-2xl">
+                                    <i class="fa-brands fa-google"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-head font-bold text-white">GCP & Multi-Cloud</h4>
+                                    <span class="text-xs font-mono text-vice-cyan font-bold">PROFESSIONAL & FOUNDATIONAL</span>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-vice-cyan/20 border border-vice-cyan text-vice-cyan font-synth text-xs font-bold">1x GCP Pro</span>
+                        </div>
+
+                        <div class="space-y-2 pt-2">
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-white">GCP Certified DevOps Engineer Professional</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-vice-cyan/20 text-vice-cyan">PRO</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-300">Oracle Cloud Infrastructure (OCI) Foundations</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-red-500/20 text-red-300">OCI</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-300">Oracle Cloud Infrastructure 2023 AI Certified</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-red-500/20 text-red-300">OCI AI</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-300">Cloud Security Professional - IBSEC</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-vice-pink/20 text-vice-pink">SEC</span>
+                            </div>
+                            <div class="p-2.5 rounded-lg bg-vice-darker/60 border border-white/5 flex items-center justify-between">
+                                <span class="text-xs font-semibold text-gray-300">AWS Well-Architected Proficient</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">AWS WA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Technical Badges Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="glass-window p-4 rounded-xl text-center space-y-1">
+                    <i class="fa-solid fa-code-branch text-vice-pink text-lg mb-1"></i>
+                    <div class="text-xs font-bold text-white">GitOps Fundamentals</div>
+                    <div class="text-[10px] font-mono text-gray-400">CodeFresh</div>
+                </div>
+                <div class="glass-window p-4 rounded-xl text-center space-y-1">
+                    <i class="fa-solid fa-lightbulb text-vice-yellow text-lg mb-1"></i>
+                    <div class="text-xs font-bold text-white">Enterprise Design Thinking</div>
+                    <div class="text-[10px] font-mono text-gray-400">IBM Practitioner</div>
+                </div>
+                <div class="glass-window p-4 rounded-xl text-center space-y-1">
+                    <i class="fa-solid fa-chart-pie text-vice-cyan text-lg mb-1"></i>
+                    <div class="text-xs font-bold text-white">AWS Cloud Economics</div>
+                    <div class="text-[10px] font-mono text-gray-400">AWS Partner</div>
+                </div>
+                <div class="glass-window p-4 rounded-xl text-center space-y-1">
+                    <i class="fa-solid fa-cube text-vice-purple text-lg mb-1"></i>
+                    <div class="text-xs font-bold text-white">DevOps Essentials</div>
+                    <div class="text-[10px] font-mono text-gray-400">4Linux</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me & Education Glass Window -->
+    <section id="about" class="py-20 px-4 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-vice-pink uppercase" data-i18n="sec_about_tag">02. ACADEMIA & BACKGROUND</h2>
+                <h3 class="text-3xl sm:text-5xl font-synth font-black text-white uppercase tracking-tight">
+                    ABOUT <span class="neon-text-cyan">GLEISON</span>
+                </h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-vice-cyan to-vice-pink mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Glass Window Card Container -->
+            <div class="glass-window rounded-2xl overflow-hidden p-6 sm:p-10 space-y-8">
+                <!-- Window Header bar -->
+                <div class="flex items-center justify-between pb-4 border-b border-white/10 font-mono text-xs">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-cyan-400"></span>
+                        <span class="text-gray-400 pl-2">~/about/gleison_pires.md</span>
+                    </div>
+                    <span class="text-vice-pink hidden sm:inline"><i class="fa-brands fa-linux text-sm mr-1"></i>Linux Tux Enthusiast</span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <!-- Text Content -->
+                    <div class="lg:col-span-7 space-y-5">
+                        <h4 class="text-2xl font-head font-bold text-white" data-i18n="about_heading">
+                            High-Performance Computing Researcher & Senior Cloud Architect
+                        </h4>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-sans" data-i18n="about_p1">
+                            Based in São Paulo, Brazil, I work as a Senior Cloud Solutions Architect at Compass UOL and am pursuing my Master's Degree (MSc) in Computer Science and Computational Mathematics at the prestigious University of São Paulo (USP - ICMC).
+                        </p>
+                        
+                        <p class="text-gray-300 text-sm leading-relaxed font-sans" data-i18n="about_p2">
+                            My academic research evaluates performance portability in High-Performance Computing (HPC) using modern C++ abstractions like Kokkos and RAJA on NVIDIA GPU architectures (Ada Lovelace). In the corporate landscape, I design complex multi-cloud solutions (AWS, GCP, Azure, OCI) with automated DevSecOps pipelines and FinOps cost reduction practices.
+                        </p>
+
+                        <!-- Passions Pill badges -->
+                        <div class="pt-2 flex flex-wrap gap-2 text-xs font-mono">
+                            <span class="px-3 py-1 rounded-full glass-pill text-vice-cyan"><i class="fa-solid fa-terminal mr-1.5"></i>Linux & Bash</span>
+                            <span class="px-3 py-1 rounded-full glass-pill text-vice-pink"><i class="fa-solid fa-camera mr-1.5"></i>Photography</span>
+                            <span class="px-3 py-1 rounded-full glass-pill text-vice-yellow"><i class="fa-solid fa-sun mr-1.5"></i>Vice City Sunsets</span>
+                            <span class="px-3 py-1 rounded-full glass-pill text-vice-purple"><i class="fa-solid fa-plane mr-1.5"></i>Travel</span>
+                        </div>
+                    </div>
+
+                    <!-- Education Cards Column -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <!-- Education 1: USP Master's -->
+                        <div class="p-5 rounded-xl bg-vice-darker/80 border border-vice-pink/40 space-y-2">
+                            <div class="flex justify-between items-center text-xs font-mono">
+                                <span class="px-2 py-0.5 rounded bg-vice-pink/20 text-vice-pink font-bold">2026 - 2028</span>
+                                <span class="text-gray-400">São Paulo, BR</span>
+                            </div>
+                            <h5 class="text-lg font-head font-bold text-white">Universidade de São Paulo (USP - ICMC)</h5>
+                            <p class="text-xs text-vice-cyan font-semibold">MSc Stricto Sensu - Computer Science & Computational Math</p>
+                            <p class="text-xs text-gray-400 font-sans">Focus: High Performance Computing (HPC), Supercomputing & GPU Performance Portability.</p>
+                        </div>
+
+                        <!-- Education 2: UFSM Bachelor -->
+                        <div class="p-5 rounded-xl bg-vice-darker/80 border border-vice-cyan/40 space-y-2">
+                            <div class="flex justify-between items-center text-xs font-mono">
+                                <span class="px-2 py-0.5 rounded bg-vice-cyan/20 text-vice-cyan font-bold">2021 - 2026</span>
+                                <span class="text-gray-400">UFSM, BR</span>
+                            </div>
+                            <h5 class="text-lg font-head font-bold text-white">Universidade Federal de Santa Maria</h5>
+                            <p class="text-xs text-vice-pink font-semibold">Bachelor's Degree in Information Systems</p>
+                            <p class="text-xs text-gray-400 font-sans">Dissertation: Performance Portability Evaluation in HPC comparing Kokkos and RAJA on GPUs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialties & Tech Domains -->
+    <section id="specialties" class="py-20 px-4 bg-vice-darker/60 relative z-10 border-y border-white/10">
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-vice-yellow uppercase" data-i18n="sec_spec_tag">03. CORE TECHNICAL DOMAINS</h2>
+                <h3 class="text-3xl sm:text-5xl font-synth font-black text-white uppercase tracking-tight">
+                    SPECIALTIES & <span class="neon-text-pink">STACK</span>
+                </h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-vice-yellow to-vice-pink mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Specialties Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-window p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-vice-pink/20 border border-vice-pink flex items-center justify-center text-vice-pink text-2xl group-hover:scale-110 transition">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+                        <h4 class="text-xl font-head font-bold text-white" data-i18n="spec_1_title">Multi-Cloud & Outposts</h4>
+                        <p class="text-gray-300 text-xs leading-relaxed font-sans" data-i18n="spec_1_desc">
+                            Architecture for hybrid edge and multi-cloud infrastructure across AWS, GCP, Azure, OCI, and AWS Outposts (Rack).
+                        </p>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-1.5 font-mono text-[10px]">
+                        <span class="px-2 py-1 rounded bg-vice-pink/20 text-vice-pink">AWS SA Pro</span>
+                        <span class="px-2 py-1 rounded bg-vice-cyan/20 text-vice-cyan">GCP Pro</span>
+                        <span class="px-2 py-1 rounded bg-vice-purple/20 text-vice-purple">Terraform</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-window p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-vice-cyan/20 border border-vice-cyan flex items-center justify-center text-vice-cyan text-2xl group-hover:scale-110 transition">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h4 class="text-xl font-head font-bold text-white" data-i18n="spec_2_title">DevSecOps & CI/CD</h4>
+                        <p class="text-gray-300 text-xs leading-relaxed font-sans" data-i18n="spec_2_desc">
+                            Automated pipelines with integrated SAST/DAST security tooling. Prevented over 150 critical security flaws in production.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-1.5 font-mono text-[10px]">
+                        <span class="px-2 py-1 rounded bg-vice-cyan/20 text-vice-cyan">CI/CD</span>
+                        <span class="px-2 py-1 rounded bg-vice-pink/20 text-vice-pink">Python/Go</span>
+                        <span class="px-2 py-1 rounded bg-vice-yellow/20 text-vice-yellow">Docker/K8s</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-window p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-vice-yellow/20 border border-vice-yellow flex items-center justify-center text-vice-yellow text-2xl group-hover:scale-110 transition">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                        <h4 class="text-xl font-head font-bold text-white" data-i18n="spec_3_title">HPC & Supercomputing</h4>
+                        <p class="text-gray-300 text-xs leading-relaxed font-sans" data-i18n="spec_3_desc">
+                            Evaluation of performance portability across supercomputing environments using C++, Kokkos, RAJA, and NVIDIA GPU architectures.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-1.5 font-mono text-[10px]">
+                        <span class="px-2 py-1 rounded bg-vice-yellow/20 text-vice-yellow">C++</span>
+                        <span class="px-2 py-1 rounded bg-vice-pink/20 text-vice-pink">Kokkos</span>
+                        <span class="px-2 py-1 rounded bg-vice-cyan/20 text-vice-cyan">NVIDIA Ada</span>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-window p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-vice-purple/20 border border-vice-purple flex items-center justify-center text-vice-purple text-2xl group-hover:scale-110 transition">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h4 class="text-xl font-head font-bold text-white" data-i18n="spec_4_title">FinOps & Observability</h4>
+                        <p class="text-gray-300 text-xs leading-relaxed font-sans" data-i18n="spec_4_desc">
+                            Cloud spending optimization resulting in up to 25% cost reduction. Advanced observability setup with Grafana, Prometheus, and CloudWatch.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-1.5 font-mono text-[10px]">
+                        <span class="px-2 py-1 rounded bg-vice-purple/20 text-vice-purple">FinOps</span>
+                        <span class="px-2 py-1 rounded bg-vice-cyan/20 text-vice-cyan">Grafana</span>
+                        <span class="px-2 py-1 rounded bg-vice-pink/20 text-vice-pink">CloudWatch</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Experience Timeline (AURIX PAY REMOVED) -->
+    <section id="journey" class="py-20 px-4 relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-vice-cyan uppercase" data-i18n="sec_journey_tag">04. CAREER TIMELINE</h2>
+                <h3 class="text-3xl sm:text-5xl font-synth font-black text-white uppercase tracking-tight">
+                    PROFESSIONAL <span class="neon-text-pink">JOURNEY</span>
+                </h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-vice-pink to-vice-cyan mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Timeline Entries -->
+            <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:-ml-0.5 before:w-0.5 before:bg-gradient-to-b before:from-vice-pink before:via-vice-cyan before:to-vice-purple">
+                
+                <!-- Position 1: Compass UOL Architect -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between group">
+                    <div class="flex items-center w-full md:w-1/2 md:pr-8 md:text-right order-2 md:order-1">
+                        <div class="glass-window p-6 rounded-2xl w-full border border-vice-pink/40 space-y-2">
+                            <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                                <span class="px-2.5 py-1 rounded-full bg-vice-pink/20 text-vice-pink font-bold">Jan 2022 - Present</span>
+                                <span class="text-gray-400">São Paulo, BR</span>
+                            </div>
+                            <h4 class="text-xl font-head font-bold text-white">Compass UOL</h4>
+                            <p class="text-vice-cyan font-semibold text-sm" data-i18n="j1_title">Senior Cloud Solutions Architect & DevSecOps Engineer</p>
+                            <ul class="text-gray-300 text-xs font-sans space-y-1.5 pt-2 text-left list-disc list-inside">
+                                <li data-i18n="j1_bullet1">Designed hybrid & multi-cloud architectures across AWS, GCP, Azure, and OCI including AWS Outposts.</li>
+                                <li data-i18n="j1_bullet2">Achieved 15%-20% cloud infrastructure cost optimization through monthly FinOps reporting.</li>
+                                <li data-i18n="j1_bullet3">Implemented robust CI/CD pipelines with SAST/DAST, preventing 150+ critical security flaws.</li>
+                                <li data-i18n="j1_bullet4">Helped attain AWS competencies (Cloud Operations, FinOps, MSP) by documenting processes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-vice-bg border-2 border-vice-pink text-vice-pink flex items-center justify-center z-10 my-4 md:my-0 order-1 md:order-2 shadow-[0_0_15px_#ff007f]">
+                        <i class="fa-solid fa-cloud text-xs"></i>
+                    </div>
+                    <div class="w-full md:w-1/2 md:pl-8 order-3 hidden md:block"></div>
+                </div>
+
+                <!-- Position 2: UFSM / Ministry of Education Project -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between group">
+                    <div class="w-full md:w-1/2 md:pr-8 order-3 md:order-1 hidden md:block"></div>
+                    <div class="w-8 h-8 rounded-full bg-vice-bg border-2 border-vice-cyan text-vice-cyan flex items-center justify-center z-10 my-4 md:my-0 order-1 md:order-2 shadow-[0_0_15px_#00f3ff]">
+                        <i class="fa-solid fa-building-columns text-xs"></i>
+                    </div>
+                    <div class="flex items-center w-full md:w-1/2 md:pl-8 order-2 md:order-3">
+                        <div class="glass-window p-6 rounded-2xl w-full border border-vice-cyan/40 space-y-2">
+                            <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                                <span class="px-2.5 py-1 rounded-full bg-vice-cyan/20 text-vice-cyan font-bold">Dec 2023 - Dec 2024</span>
+                                <span class="text-gray-400">UFSM / MEC</span>
+                            </div>
+                            <h4 class="text-xl font-head font-bold text-white">Federal University of Santa Maria (UFSM)</h4>
+                            <p class="text-vice-pink font-semibold text-sm" data-i18n="j2_title">Cloud Architect & DevOps Engineer (Ministry of Education Project)</p>
+                            <ul class="text-gray-300 text-xs font-sans space-y-1.5 pt-2 text-left list-disc list-inside">
+                                <li data-i18n="j2_bullet1">Planned, provisioned, and managed AWS cloud infrastructure for government project delivery.</li>
+                                <li data-i18n="j2_bullet2">Boosted team productivity by 15% through Azure DevOps configuration & IaC with Terraform.</li>
+                                <li data-i18n="j2_bullet3">Monitored high availability & scalability using Grafana Toolkit and CloudWatch.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Position 3: Compass UOL Intern -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between group">
+                    <div class="flex items-center w-full md:w-1/2 md:pr-8 md:text-right order-2 md:order-1">
+                        <div class="glass-window p-6 rounded-2xl w-full border border-vice-purple/40 space-y-2">
+                            <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                                <span class="px-2.5 py-1 rounded-full bg-vice-purple/20 text-vice-purple font-bold">Sep 2021 - Apr 2022</span>
+                                <span class="text-gray-400">Compass UOL</span>
+                            </div>
+                            <h4 class="text-xl font-head font-bold text-white">Compass UOL</h4>
+                            <p class="text-vice-yellow font-semibold text-sm" data-i18n="j3_title">DevOps Intern & Support Trainee</p>
+                            <p class="text-gray-300 text-xs font-sans leading-relaxed pt-1" data-i18n="j3_desc">
+                                Specialized training in AWS Cloud Computing, Containerization (Docker, Swarm, Kubernetes), CI/CD pipelines, and multi-cloud observability monitoring.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-vice-bg border-2 border-vice-purple text-vice-purple flex items-center justify-center z-10 my-4 md:my-0 order-1 md:order-2 shadow-[0_0_15px_#9d4edd]">
+                        <i class="fa-solid fa-code text-xs"></i>
+                    </div>
+                    <div class="w-full md:w-1/2 md:pl-8 order-3 hidden md:block"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards & Community Leadership Window -->
+    <section id="awards" class="py-20 px-4 bg-vice-darker/70 relative z-10 border-t border-white/10">
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-vice-yellow uppercase" data-i18n="sec_awards_tag">05. HONORS & GRANTS</h2>
+                <h3 class="text-3xl sm:text-5xl font-synth font-black text-white uppercase tracking-tight">
+                    AWARDS & <span class="neon-text-cyan">RECOGNITION</span>
+                </h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-vice-yellow to-vice-cyan mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Award 1: AWS Las Vegas Grant -->
+                <div class="glass-window p-6 rounded-2xl border-l-4 border-l-vice-yellow space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-vice-yellow text-xs font-mono font-bold">Las Vegas, USA • 2025</span>
+                        <i class="fa-solid fa-plane-departure text-vice-yellow text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-head font-bold text-white" data-i18n="award_1_title">AWS re:Invent All Builders Welcome Grant</h4>
+                    <p class="text-gray-300 text-xs leading-relaxed font-sans" data-i18n="award_1_desc">
+                        Personally selected by AWS to attend AWS re:Invent 2025 in Las Vegas, recognizing technical contributions to cloud engineering and community leadership.
+                    </p>
+                </div>
+
+                <!-- Award 2: Rosatom Certificate of Excellence -->
+                <div class="glass-window p-6 rounded-2xl border-l-4 border-l-vice-pink space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-vice-pink text-xs font-mono font-bold">Rosatom • Obninsk Tech</span>
+                        <i class="fa-solid fa-certificate text-vice-pink text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-head font-bold text-white" data-i18n="award_2_title">Certificate of Excellence - Rosatom</h4>
+                    <p class="text-gray-300 text-xs leading-relaxed font-sans" data-i18n="award_2_desc">
+                        Honored with a Certificate of Excellence by Rosatom (Russian State Atomic Energy Corporation) at Obninsk Tech for technical presentation.
+                    </p>
+                </div>
+
+                <!-- Award 3: Scientific Research Award -->
+                <div class="glass-window p-6 rounded-2xl border-l-4 border-l-vice-cyan space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-vice-cyan text-xs font-mono font-bold">Academic Research</span>
+                        <i class="fa-solid fa-flask text-vice-cyan text-xl"></i>
+                    </div>
+                    <h4 class="text-lg font-head font-bold text-white" data-i18n="award_3_title">Junior Scientific Researcher Award</h4>
+                    <p class="text-gray-300 text-xs leading-relaxed font-sans" data-i18n="award_3_desc">
+                        Recognized as Scientific Initiation Researcher (Iniciação Científica) for contributions to High-Performance Computing and GPU parallel programming.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Vice City Linux Tux Terminal Window -->
+    <section id="terminal" class="py-20 px-4 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center space-y-3 mb-10">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-vice-cyan uppercase" data-i18n="sec_term_tag">06. INTERACTIVE BASH SHELL</h2>
+                <h3 class="text-3xl sm:text-4xl font-synth font-black text-white uppercase tracking-tight">
+                    TUX <span class="neon-text-pink">TERMINAL</span>
+                </h3>
+                <p class="text-gray-400 text-xs font-mono" data-i18n="term_sub">Type 'help', 'certs', 'skills', 'skyline', 'tux', or 'sunset' below.</p>
+            </div>
+
+            <!-- Terminal Window -->
+            <div class="glass-window rounded-2xl overflow-hidden font-mono border border-vice-pink/40 shadow-2xl">
+                <!-- Bar -->
+                <div class="bg-vice-darker px-4 py-3 flex items-center justify-between border-b border-white/10 text-xs">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-cyan-400"></span>
+                    </div>
+                    <span class="text-gray-400"><i class="fa-brands fa-linux text-vice-yellow mr-1.5"></i>tux@vice-city-sp:~</span>
+                    <span class="text-vice-pink font-bold">bash 5.2</span>
+                </div>
+
+                <!-- Quick Command Buttons -->
+                <div class="bg-vice-bg/80 px-4 py-2 border-b border-white/5 flex flex-wrap gap-2 text-xs">
+                    <span class="text-gray-400 self-center">Quick Run:</span>
+                    <button onclick="runCommand('help')" class="px-2.5 py-1 rounded bg-white/5 text-vice-cyan hover:bg-vice-cyan/20 border border-white/10 transition">help</button>
+                    <button onclick="runCommand('certs')" class="px-2.5 py-1 rounded bg-white/5 text-vice-pink hover:bg-vice-pink/20 border border-white/10 transition">certs</button>
+                    <button onclick="runCommand('skills')" class="px-2.5 py-1 rounded bg-white/5 text-vice-yellow hover:bg-vice-yellow/20 border border-white/10 transition">skills</button>
+                    <button onclick="runCommand('skyline')" class="px-2.5 py-1 rounded bg-white/5 text-vice-cyan hover:bg-vice-cyan/20 border border-white/10 transition">skyline</button>
+                    <button onclick="runCommand('sunset')" class="px-2.5 py-1 rounded bg-white/5 text-vice-amber hover:bg-vice-amber/20 border border-white/10 transition">sunset</button>
+                    <button onclick="runCommand('tux')" class="px-2.5 py-1 rounded bg-white/5 text-vice-purple hover:bg-vice-purple/20 border border-white/10 transition">tux</button>
+                </div>
+
+                <!-- Terminal Body Output -->
+                <div id="terminalOutput" class="p-5 text-xs sm:text-sm text-gray-200 bg-vice-darker/90 min-h-[260px] max-h-[380px] overflow-y-auto space-y-3 font-code">
+                    <div class="text-vice-cyan font-bold">
+                        Welcome to Gleison's Vice City Linux Shell v2.6.0-generic [São Paulo, BR]<br>
+                        Type <span class="text-vice-yellow font-bold">'help'</span> or click the buttons above for commands.
+                    </div>
+                </div>
+
+                <!-- Command Input Form -->
+                <form id="terminalForm" onsubmit="handleTerminalSubmit(event)" class="px-5 py-3 bg-vice-darker border-t border-white/10 flex items-center space-x-2">
+                    <span class="text-vice-pink font-bold text-xs sm:text-sm">tux@sp:~$</span>
+                    <input type="text" id="terminalInput" autocomplete="off" placeholder="type a command..." class="w-full bg-transparent text-white font-code text-xs sm:text-sm focus:outline-none placeholder-gray-600">
+                    <button type="submit" class="text-vice-cyan hover:text-white px-2"><i class="fa-solid fa-paper-plane text-xs"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photography Showcase ("Gleison's Lens") -->
+    <section id="photography" class="py-20 px-4 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center space-y-3 mb-10">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-vice-pink uppercase" data-i18n="sec_photo_tag">07. GLEISON'S LENS & TRAVELS</h2>
+                <h3 class="text-3xl sm:text-5xl font-synth font-black text-white uppercase tracking-tight">
+                    VICE CITY <span class="neon-text-pink">SUNSETS</span> & SHOTS
+                </h3>
+                <p class="text-gray-400 text-sm max-w-xl mx-auto font-sans" data-i18n="photo_subtitle">
+                    Capturing vibrant dusk hues, synthwave aesthetic landscapes, and global cloud journeys.
+                </p>
+                <div class="w-24 h-1 bg-gradient-to-r from-vice-pink to-vice-amber mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="flex justify-center space-x-2 sm:space-x-4 mb-10 font-head uppercase text-xs sm:text-sm">
+                <button onclick="filterPhotos('all', event)" class="photo-tab-btn active px-4 py-2 rounded-xl border border-vice-pink bg-vice-pink text-white font-bold transition">All Shots</button>
+                <button onclick="filterPhotos('sunset', event)" class="photo-tab-btn px-4 py-2 rounded-xl border border-white/10 bg-vice-darker text-gray-300 hover:border-vice-pink transition">Sunsets</button>
+                <button onclick="filterPhotos('travel', event)" class="photo-tab-btn px-4 py-2 rounded-xl border border-white/10 bg-vice-darker text-gray-300 hover:border-vice-pink transition">Travel</button>
+                <button onclick="filterPhotos('tech', event)" class="photo-tab-btn px-4 py-2 rounded-xl border border-white/10 bg-vice-darker text-gray-300 hover:border-vice-pink transition">Tech Labs</button>
+            </div>
+
+            <!-- Photo Grid -->
+            <div id="photoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Photo Card 1: Sunset Miami/Vice City Vibe -->
+                <div class="photo-card sunset glass-window rounded-2xl overflow-hidden cursor-pointer group" onclick="openPhotoModal('./sunset_miami.jpg', 'Vice City Dusk Horizon', 'Miami Vice style dusk sunset with palm silhouettes and magenta sky.')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./sunset_miami.jpg" alt="Vice City Sunset" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-vice-bg via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-4 right-4 flex justify-between items-end">
+                            <div>
+                                <span class="text-vice-amber text-[10px] font-mono uppercase font-bold tracking-widest">Sunset</span>
+                                <h5 class="text-white font-head font-bold text-base">Vice City Dusk Horizon</h5>
+                            </div>
+                            <span class="w-8 h-8 rounded-full bg-vice-pink/30 border border-vice-pink flex items-center justify-center text-white text-xs"><i class="fa-solid fa-expand"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Card 2: Cyberpunk / Tech Lab Setup -->
+                <div class="photo-card tech glass-window rounded-2xl overflow-hidden cursor-pointer group" onclick="openPhotoModal('./ushuaia_1.jpg', 'Ushuaia', 'Ushuaia City.')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./ushuaia_1.jpg" alt="Matrix Setup" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-vice-bg via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-4 right-4 flex justify-between items-end">
+                            <div>
+                                <span class="text-vice-cyan text-[10px] font-mono uppercase font-bold tracking-widest">Travel / Argetina</span>
+                                <h5 class="text-white font-head font-bold text-base">Ushuaia South Coast</h5>
+                            </div>
+                            <span class="w-8 h-8 rounded-full bg-vice-cyan/30 border border-vice-cyan flex items-center justify-center text-white text-xs"><i class="fa-solid fa-expand"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Card 3: Travel Sunset -->
+                <div class="photo-card travel sunset glass-window rounded-2xl overflow-hidden cursor-pointer group" onclick="openPhotoModal('./ushuaia_6.jpg', 'Ushuaia Airport', 'View From Ushuaia Airport.')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./ushuaia_6.jpg" alt="Coastal Travel" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-vice-bg via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-4 right-4 flex justify-between items-end">
+                            <div>
+                                <span class="text-vice-yellow text-[10px] font-mono uppercase font-bold tracking-widest">Travel / Airport</span>
+                                <h5 class="text-white font-head font-bold text-base">Ushuaia Airport</h5>
+                            </div>
+                            <span class="w-8 h-8 rounded-full bg-vice-yellow/30 border border-vice-yellow flex items-center justify-center text-white text-xs"><i class="fa-solid fa-expand"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Card 4: Retro City Lights -->
+                <div class="photo-card travel glass-window rounded-2xl overflow-hidden cursor-pointer group" onclick="openPhotoModal('./ushuaia_3.jpg', 'Ushuaia Coast', 'View from the sea.')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./ushuaia_3.jpg" alt="Metropolis" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-vice-bg via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-4 right-4 flex justify-between items-end">
+                            <div>
+                                <span class="text-vice-pink text-[10px] font-mono uppercase font-bold tracking-widest">Travel</span>
+                                <h5 class="text-white font-head font-bold text-base">Ushuaia Coast</h5>
+                            </div>
+                            <span class="w-8 h-8 rounded-full bg-vice-pink/30 border border-vice-pink flex items-center justify-center text-white text-xs"><i class="fa-solid fa-expand"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Card 5: Lens & Camera Hobby -->
+                <div class="photo-card tech glass-window rounded-2xl overflow-hidden cursor-pointer group" onclick="openPhotoModal('./amsterdam', 'Amsterdam', 'Amsterdam Sunset...')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./amsterdam.jpg" alt="Camera lens" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-vice-bg via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-4 right-4 flex justify-between items-end">
+                            <div>
+                                <span class="text-vice-cyan text-[10px] font-mono uppercase font-bold tracking-widest">Sunset / Sky</span>
+                                <h5 class="text-white font-head font-bold text-base">Amsterdam Sunset</h5>
+                            </div>
+                            <span class="w-8 h-8 rounded-full bg-vice-cyan/30 border border-vice-cyan flex items-center justify-center text-white text-xs"><i class="fa-solid fa-expand"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Card 6: Desert Glow Sunset (Las Vegas / re:Invent) -->
+                <div class="photo-card sunset travel glass-window rounded-2xl overflow-hidden cursor-pointer group" onclick="openPhotoModal('./paris.jpg', 'Paris', 'Sous le ciel de Paris.')">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="./paris.jpg" alt="Nevada Sunset" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-vice-bg via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-3 left-4 right-4 flex justify-between items-end">
+                            <div>
+                                <span class="text-vice-amber text-[10px] font-mono uppercase font-bold tracking-widest">City / Travel</span>
+                                <h5 class="text-white font-head font-bold text-base">Paris</h5>
+                            </div>
+                            <span class="w-8 h-8 rounded-full bg-vice-amber/30 border border-vice-amber flex items-center justify-center text-white text-xs"><i class="fa-solid fa-expand"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Lightbox Modal -->
+    <div id="photoModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-2xl flex items-center justify-center p-4">
+        <div class="relative max-w-4xl w-full glass-window rounded-2xl overflow-hidden border border-vice-pink/50 shadow-[0_0_50px_rgba(255,0,127,0.4)]">
+            <button onclick="closePhotoModal()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-vice-darker/80 border border-vice-pink text-white hover:text-vice-cyan flex items-center justify-center text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="p-2 sm:p-4">
+                <img id="modalImage" src="" alt="Enlarged Shot" class="w-full max-h-[70vh] object-contain rounded-xl">
+            </div>
+            <div class="p-6 bg-vice-darker border-t border-white/10 space-y-1">
+                <h4 id="modalTitle" class="text-xl font-head font-bold text-white">Photo Title</h4>
+                <p id="modalDesc" class="text-gray-400 text-xs font-sans">Photo description</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Languages Section -->
+    <section id="languages" class="py-20 px-4 bg-vice-darker/60 relative z-10 border-t border-white/10">
+        <div class="max-w-5xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center space-y-3 mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-vice-cyan uppercase" data-i18n="sec_lang_tag">08. GLOBAL COMMUNICATION</h2>
+                <h3 class="text-3xl sm:text-5xl font-synth font-black text-white uppercase tracking-tight">
+                    LANGUAGES & <span class="neon-text-cyan">FLUENCY</span>
+                </h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-vice-cyan to-vice-purple mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Language Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- English -->
+                <div class="glass-window p-5 rounded-2xl border border-vice-cyan/30 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🇺🇸 / 🇬🇧</span>
+                            <span class="font-head font-bold text-lg text-white">English</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded bg-vice-cyan/20 text-vice-cyan font-mono text-xs font-bold">C1</span>
+                    </div>
+                    <div class="text-xs text-gray-400 font-sans" data-i18n="lang_en_level">Full Professional Proficiency</div>
+                    <div class="w-full bg-vice-darker h-2 rounded-full overflow-hidden border border-white/10">
+                        <div class="bg-gradient-to-r from-vice-cyan to-vice-pink h-full w-[90%]"></div>
+                    </div>
+                </div>
+
+                <!-- Portuguese -->
+                <div class="glass-window p-5 rounded-2xl border border-vice-pink/30 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🇧🇷</span>
+                            <span class="font-head font-bold text-lg text-white">Portuguese</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded bg-vice-pink/20 text-vice-pink font-mono text-xs font-bold">Native</span>
+                    </div>
+                    <div class="text-xs text-gray-400 font-sans" data-i18n="lang_pt_level">Native Language</div>
+                    <div class="w-full bg-vice-darker h-2 rounded-full overflow-hidden border border-white/10">
+                        <div class="bg-gradient-to-r from-vice-pink to-vice-yellow h-full w-[100%]"></div>
+                    </div>
+                </div>
+
+                <!-- Spanish -->
+                <div class="glass-window p-5 rounded-2xl border border-vice-yellow/30 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🇪🇸</span>
+                            <span class="font-head font-bold text-lg text-white">Spanish</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded bg-vice-yellow/20 text-vice-yellow font-mono text-xs font-bold">C1</span>
+                    </div>
+                    <div class="text-xs text-gray-400 font-sans" data-i18n="lang_es_level">Full Professional Proficiency</div>
+                    <div class="w-full bg-vice-darker h-2 rounded-full overflow-hidden border border-white/10">
+                        <div class="bg-gradient-to-r from-vice-yellow to-vice-cyan h-full w-[88%]"></div>
+                    </div>
+                </div>
+
+                <!-- French -->
+                <div class="glass-window p-5 rounded-2xl border border-vice-purple/30 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🇫🇷</span>
+                            <span class="font-head font-bold text-lg text-white">French</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded bg-vice-purple/20 text-vice-purple font-mono text-xs font-bold">A2</span>
+                    </div>
+                    <div class="text-xs text-gray-400 font-sans" data-i18n="lang_fr_level">Elementary Proficiency</div>
+                    <div class="w-full bg-vice-darker h-2 rounded-full overflow-hidden border border-white/10">
+                        <div class="bg-gradient-to-r from-vice-purple to-vice-pink h-full w-[35%]"></div>
+                    </div>
+                </div>
+
+                <!-- German -->
+                <div class="glass-window p-5 rounded-2xl border border-white/20 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🇩🇪</span>
+                            <span class="font-head font-bold text-lg text-white">German</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded bg-white/20 text-gray-300 font-mono text-xs font-bold">A1</span>
+                    </div>
+                    <div class="text-xs text-gray-400 font-sans" data-i18n="lang_de_level">Basic Elementary</div>
+                    <div class="w-full bg-vice-darker h-2 rounded-full overflow-hidden border border-white/10">
+                        <div class="bg-gradient-to-r from-gray-400 to-vice-cyan h-full w-[25%]"></div>
+                    </div>
+                </div>
+
+                <!-- Russian -->
+                <div class="glass-window p-5 rounded-2xl border border-vice-pink/30 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🇷🇺</span>
+                            <span class="font-head font-bold text-lg text-white">Russian</span>
+                        </div>
+                        <span class="px-2 py-0.5 rounded bg-vice-pink/20 text-vice-pink font-mono text-xs font-bold">A1</span>
+                    </div>
+                    <div class="text-xs text-gray-400 font-sans" data-i18n="lang_ru_level">Basic Elementary (Obninsk Tech)</div>
+                    <div class="w-full bg-vice-darker h-2 rounded-full overflow-hidden border border-white/10">
+                        <div class="bg-gradient-to-r from-vice-pink to-vice-purple h-full w-[25%]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer & Contact Channels -->
+    <footer id="contact" class="py-16 px-4 bg-vice-darker relative z-10 border-t border-vice-pink/40">
+        <div class="max-w-6xl mx-auto space-y-10">
+            <!-- CTA Header -->
+            <div class="text-center space-y-4">
+                <h3 class="text-3xl sm:text-5xl font-synth font-black text-white uppercase tracking-tight">
+                    LET'S CONNECT & <span class="neon-text-pink">BUILD</span>
+                </h3>
+                <p class="text-gray-400 text-sm max-w-lg mx-auto font-sans" data-i18n="footer_subtitle">
+                    Open for multi-cloud architecture, HPC research collaborations, and AWS community meetups.
+                </p>
+            </div>
+
+            <!-- Social Links -->
+            <div class="flex flex-wrap justify-center items-center gap-4">
+                <a href="mailto:gleisonaps@hotmail.com" class="btn-vice-outline px-6 py-3 rounded-xl font-mono text-xs flex items-center space-x-2">
+                    <i class="fa-solid fa-envelope text-vice-pink text-sm"></i>
+                    <span>gleisonaps@hotmail.com</span>
+                </a>
+                <a href="https://linkedin.com/in/gleisonpires/" target="_blank" rel="noopener noreferrer" class="btn-vice-outline px-6 py-3 rounded-xl font-mono text-xs flex items-center space-x-2">
+                    <i class="fa-brands fa-linkedin text-vice-cyan text-sm"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://builder.aws.com/community/@strovertzz" target="_blank" rel="noopener noreferrer" class="btn-vice-outline px-6 py-3 rounded-xl font-mono text-xs flex items-center space-x-2">
+                    <i class="fa-brands fa-aws text-vice-yellow text-sm"></i>
+                    <span>AWS Builder</span>
+                </a>
+            </div>
+
+            <!-- Credits -->
+            <div class="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-gray-400 space-y-4 sm:space-y-0">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-brands fa-linux text-vice-yellow text-lg"></i>
+                    <span>Gleison Pires • São Paulo, Brasil</span>
+                </div>
+                <div class="text-center sm:text-right">
+                    © 2026 Gleison Pires // 1980 Vice City Glassmorphism Vibe
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Engines -->
+    <script>
+        // Dictionary for Bilingual switching
+        const translations = {
+            en: {
+                nav_about: "About",
+                nav_certs: "Certifications",
+                nav_specialties: "Specialties",
+                nav_journey: "Journey",
+                nav_awards: "Awards",
+                nav_gallery: "Photography",
+                nav_terminal: "Terminal",
+                nav_contact: "Contact Me",
+                hero_status_tag: "MSc @ USP ICMC",
+                hero_subtitle: "Cloud Solutions Architect & DevSecOps Engineer | MSc Student @ USP",
+                hero_desc: "Specialized in multi-cloud architecture (AWS, GCP, Azure, OCI), DevSecOps automation pipelines, High-Performance Computing (HPC), and FinOps cost optimization. AWS User Group Leader passionate about photography & Vice City dusk vibes.",
+                hero_btn_certs: "View 6x Certifications",
+                tux_card_role: "DevSecOps Architect & Researcher",
+                sec_certs_tag: "01. VALIDATED EXCELLENCE",
+                certs_subtitle: "5x AWS Certified & GCP DevOps Professional certified, validating expertise across multi-cloud infrastructure & operations.",
+                sec_about_tag: "02. ACADEMIA & BACKGROUND",
+                about_heading: "High-Performance Computing Researcher & Senior Cloud Architect",
+                about_p1: "Based in São Paulo, Brazil, I work as a Senior Cloud Solutions Architect at Compass UOL and am pursuing my Master's Degree (MSc) in Computer Science and Computational Mathematics at the prestigious University of São Paulo (USP - ICMC).",
+                about_p2: "My academic research evaluates performance portability in High-Performance Computing (HPC) using modern C++ abstractions like Kokkos and RAJA on NVIDIA GPU architectures (Ada Lovelace). In the corporate landscape, I design complex multi-cloud solutions (AWS, GCP, Azure, OCI) with automated DevSecOps pipelines and FinOps cost reduction practices.",
+                sec_spec_tag: "03. CORE TECHNICAL DOMAINS",
+                spec_1_title: "Multi-Cloud & Outposts",
+                spec_1_desc: "Architecture for hybrid edge and multi-cloud infrastructure across AWS, GCP, Azure, OCI, and AWS Outposts (Rack).",
+                spec_2_title: "DevSecOps & CI/CD",
+                spec_2_desc: "Automated pipelines with integrated SAST/DAST security tooling. Prevented over 150 critical security flaws in production.",
+                spec_3_title: "HPC & Supercomputing",
+                spec_3_desc: "Evaluation of performance portability across supercomputing environments using C++, Kokkos, RAJA, and NVIDIA GPU architectures.",
+                spec_4_title: "FinOps & Observability",
+                spec_4_desc: "Cloud spending optimization resulting in up to 25% cost reduction. Advanced observability setup with Grafana, Prometheus, and CloudWatch.",
+                sec_journey_tag: "04. CAREER TIMELINE",
+                j1_title: "Senior Cloud Solutions Architect & DevSecOps Engineer",
+                j1_bullet1: "Designed hybrid & multi-cloud architectures across AWS, GCP, Azure, and OCI including AWS Outposts.",
+                j1_bullet2: "Achieved 15%-20% cloud infrastructure cost optimization through monthly FinOps reporting.",
+                j1_bullet3: "Implemented robust CI/CD pipelines with SAST/DAST, preventing 150+ critical security flaws.",
+                j1_bullet4: "Helped attain AWS competencies (Cloud Operations, FinOps, MSP) by documenting processes.",
+                j2_title: "Cloud Architect & DevOps Engineer (Ministry of Education Project)",
+                j2_bullet1: "Planned, provisioned, and managed AWS cloud infrastructure for government project delivery.",
+                j2_bullet2: "Boosted team productivity by 15% through Azure DevOps configuration & IaC with Terraform.",
+                j2_bullet3: "Monitored high availability & scalability using Grafana Toolkit and CloudWatch.",
+                j3_title: "DevOps Intern & Support Trainee",
+                j3_desc: "Specialized training in AWS Cloud Computing, Containerization (Docker, Swarm, Kubernetes), CI/CD pipelines, and multi-cloud observability monitoring.",
+                sec_awards_tag: "05. HONORS & GRANTS",
+                award_1_title: "AWS re:Invent All Builders Welcome Grant",
+                award_1_desc: "Personally selected by AWS to attend AWS re:Invent 2025 in Las Vegas, recognizing technical contributions to cloud engineering and community leadership.",
+                award_2_title: "Certificate of Excellence - Rosatom",
+                award_2_desc: "Honored with a Certificate of Excellence by Rosatom (Russian State Atomic Energy Corporation) at Obninsk Tech for technical presentation.",
+                award_3_title: "Junior Scientific Researcher Award",
+                award_3_desc: "Recognized as Scientific Initiation Researcher (Iniciação Científica) for contributions to High-Performance Computing and GPU parallel programming.",
+                sec_term_tag: "06. INTERACTIVE BASH SHELL",
+                term_sub: "Type 'help', 'certs', 'skills', 'skyline', 'tux', or 'sunset' below.",
+                sec_photo_tag: "07. GLEISON'S LENS & TRAVELS",
+                photo_subtitle: "Capturing vibrant dusk hues, synthwave aesthetic landscapes, and global cloud journeys.",
+                sec_lang_tag: "08. GLOBAL COMMUNICATION",
+                lang_en_level: "Full Professional Proficiency",
+                lang_pt_level: "Native Language",
+                lang_es_level: "Full Professional Proficiency",
+                lang_fr_level: "Elementary Proficiency",
+                lang_de_level: "Basic Elementary",
+                lang_ru_level: "Basic Elementary (Obninsk Tech)",
+                footer_subtitle: "Open for multi-cloud architecture, HPC research collaborations, and AWS community meetups."
+            },
+            pt: {
+                nav_about: "Sobre",
+                nav_certs: "Certificações",
+                nav_specialties: "Especialidades",
+                nav_journey: "Jornada",
+                nav_awards: "Prêmios",
+                nav_gallery: "Fotografia",
+                nav_terminal: "Terminal",
+                nav_contact: "Contato",
+                hero_status_tag: "Mestrando @ USP ICMC",
+                hero_subtitle: "Arquiteto de Soluções Cloud & DevSecOps | Mestrando @ USP (ICMC)",
+                hero_desc: "Especializado em arquitetura multi-cloud (AWS, GCP, Azure, OCI), automação DevSecOps, Computação de Alto Desempenho (HPC) e FinOps. Líder de User Group AWS apaixonado por fotografia e pores do sol Vice City.",
+                hero_btn_certs: "Ver 6x Certificações",
+                tux_card_role: "Arquiteto DevSecOps & Pesquisador",
+                sec_certs_tag: "01. EXCELÊNCIA VALIDADA",
+                certs_subtitle: "5x AWS Certified & GCP DevOps Professional, validando expertise em infraestrutura e operações multi-cloud.",
+                sec_about_tag: "02. ACADEMIA & TRAJETÓRIA",
+                about_heading: "Pesquisador em Computação de Alto Desempenho & Arquiteto Cloud Sênior",
+                about_p1: "Com base em São Paulo, Brasil, atuo como Arquiteto de Soluções Cloud Sênior na Compass UOL e curso Mestrado em Ciências de Computação e Matemática Computacional na Universidade de São Paulo (USP - ICMC).",
+                about_p2: "Minha pesquisa acadêmica avalia portabilidade de desempenho em HPC utilizando Kokkos e RAJA em arquiteturas GPU NVIDIA (Ada Lovelace). No mercado de tecnologia, projeto ambientes multi-cloud com segurança DevSecOps integrada e práticas FinOps de otimização de custos.",
+                sec_spec_tag: "03. DOMÍNIOS TÉCNICOS",
+                spec_1_title: "Multi-Cloud & Outposts",
+                spec_1_desc: "Arquitetura para ambientes híbridos e multi-nuvem abrangendo AWS, GCP, Azure, OCI e AWS Outposts (Rack).",
+                spec_2_title: "DevSecOps & CI/CD",
+                spec_2_desc: "Pipelines automatizados com ferramentas de segurança SAST/DAST. Mais de 150 falhas críticas prevenidas em produção.",
+                spec_3_title: "HPC & Supercomputação",
+                spec_3_desc: "Avaliação de portabilidade em ambientes supercomputacionais utilizando C++, Kokkos, RAJA e GPUs NVIDIA.",
+                spec_4_title: "FinOps & Observabilidade",
+                spec_4_desc: "Otimização de consumo em nuvem com reduções de custo de até 25%. Monitoramento avançado com Grafana, Prometheus e CloudWatch.",
+                sec_journey_tag: "04. JORNADA PROFISSIONAL",
+                j1_title: "Arquiteto de Soluções Cloud Sênior & Engenheiro DevSecOps",
+                j1_bullet1: "Desenhou arquiteturas híbridas e multi-cloud em AWS, GCP, Azure e OCI, incluindo AWS Outposts.",
+                j1_bullet2: "Alcançou reduções de 15% a 20% em custos de infraestrutura através de relatórios mensais de FinOps.",
+                j1_bullet3: "Implementou pipelines CI/CD com SAST/DAST prevenindo 150+ falhas críticas de segurança.",
+                j1_bullet4: "Auxiliou na conquista de competências AWS (Operations, FinOps, MSP) através de mapeamento de processos.",
+                j2_title: "Arquiteto Cloud & Engenheiro DevOps (Projeto Ministério da Educação)",
+                j2_bullet1: "Planejou, provisionou e gerenciou infraestrutura de nuvem AWS em projeto do governo federal.",
+                j2_bullet2: "Aumentou produtividade em 15% com Azure DevOps e Infraestrutura como Código via Terraform.",
+                j2_bullet3: "Monitorou alta disponibilidade e escalabilidade utilizando Grafana Toolkit e CloudWatch.",
+                j3_title: "Estagiário DevOps & Trainee de Suporte",
+                j3_desc: "Treinamento especializado em Computação em Nuvem AWS, Containers (Docker, Swarm, K8s), CI/CD e Observabilidade.",
+                sec_awards_tag: "05. PRÊMIOS & RECONHECIMENTO",
+                award_1_title: "Bolsista AWS re:Invent 2025 Las Vegas",
+                award_1_desc: "Selecionado pessoalmente pela AWS para participar do AWS re:Invent 2025 em Las Vegas pelo impacto comunitário e contribuições técnicas.",
+                award_2_title: "Certificado de Excelência - Rosatom",
+                award_2_desc: "Homenageado com Certificado de Excelência pela Rosatom (Corporação Estatal de Energia Atômica da Rússia) no Obninsk Tech.",
+                award_3_title: "Pesquisador de Iniciação Científica Júnior",
+                award_3_desc: "Reconhecimento científico por pesquisas em Computação de Alto Desempenho e programação paralela em GPUs.",
+                sec_term_tag: "06. TERMINAL BASH INTERATIVO",
+                term_sub: "Digite 'help', 'certs', 'skills', 'skyline', 'tux' ou 'sunset' abaixo.",
+                sec_photo_tag: "07. FOTOGRAFIA & VIAGENS",
+                photo_subtitle: "Registros de fins de tarde vibrantes, estética synthwave e viagens de tecnologia pelo mundo.",
+                sec_lang_tag: "08. COMUNICAÇÃO GLOBAL",
+                lang_en_level: "Fluência Profissional Completa (C1)",
+                lang_pt_level: "Língua Materna (Nativo)",
+                lang_es_level: "Fluência Profissional Completa (C1)",
+                lang_fr_level: "Nível Básico / Elementar (A2)",
+                lang_de_level: "Nível Inicial / Elementar (A1)",
+                lang_ru_level: "Nível Inicial / Elementar (A1)",
+                footer_subtitle: "Disponível para arquitetura multi-cloud, pesquisas em HPC e eventos de comunidade AWS."
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'pt' : 'en';
+            document.getElementById('currentLangLabel').innerText = currentLang.toUpperCase();
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        }
+
+        // Photo Gallery Filtering
+        function filterPhotos(category, event) {
+            document.querySelectorAll('.photo-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-vice-pink', 'text-white', 'active');
+                btn.classList.add('bg-vice-darker', 'text-gray-300');
+            });
+
+            event.target.classList.add('bg-vice-pink', 'text-white', 'active');
+            event.target.classList.remove('bg-vice-darker', 'text-gray-300');
+
+            const cards = document.querySelectorAll('.photo-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Lightbox Modal
+        function openPhotoModal(imgSrc, title, desc) {
+            document.getElementById('modalImage').src = imgSrc;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('photoModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePhotoModal() {
+            document.getElementById('photoModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePhotoModal();
+        });
+
+        // Interactive Terminal Logic
+        const terminalOutput = document.getElementById('terminalOutput');
+        const terminalInput = document.getElementById('terminalInput');
+
+        const commands = {
+            help: `Available Commands:
+ - <span class="text-vice-pink font-bold">certs</span>: List 5x AWS & 1x GCP certifications
+ - <span class="text-vice-cyan font-bold">skills</span>: Overview of Cloud, HPC, & DevSecOps stack
+ - <span class="text-vice-cyan font-bold">skyline</span>: ASCII Vice City Skylines & Apartment Windows
+ - <span class="text-vice-yellow font-bold">tux</span>: Display Tux Linux penguin ASCII
+ - <span class="text-vice-amber font-bold">sunset</span>: Print Vice City dusk vibes status
+ - <span class="text-vice-purple font-bold">contact</span>: Email & social links
+ - <span class="text-gray-400 font-bold">clear</span>: Clear terminal screen`,
+            certs: `<span class="text-amber-400 font-bold">5x AWS Certifications:</span>
+ 1. AWS Certified Solutions Architect - Professional
+ 2. AWS Certified DevOps Engineer - Professional
+ 3. AWS Certified SysOps Administrator - Associate
+ 4. AWS Certified Solutions Architect - Associate
+ 5. AWS Certified Cloud Practitioner
+<span class="text-vice-cyan font-bold">1x GCP Certification:</span>
+ 6. GCP Certified DevOps Engineer Professional
+<span class="text-gray-300">Others: Oracle OCI Foundations, OCI AI, IBSEC Cloud Security</span>`,
+            skills: `<span class="text-vice-pink font-bold">Cloud Platforms:</span> AWS, GCP, Azure, OCI, AWS Outposts
+<span class="text-vice-cyan font-bold">DevSecOps & IaC:</span> Terraform, Kubernetes, Docker, Python, Go, SAST/DAST
+<span class="text-vice-yellow font-bold">HPC & Science:</span> C++, Kokkos, RAJA, NVIDIA GPU Architectures
+<span class="text-vice-purple font-bold">Observability:</span> Grafana, Prometheus, CloudWatch`,
+            skyline: `<pre class="text-vice-cyan text-[10px] leading-tight font-code">
+         |                    |
+        _|_                  _|_           *  VICE CITY DUSK
+       |___|   _  _ _       |___|     *
+       | | |  | || | |  _   | | | 
+       |*|*|  |*||*|*| | |  |*|*|   [#] [#] [#] (Apartment Lights)
+       | | |  | || | | |*|  | | |   ~~~~~~~~~~~~ (Ocean Horizons)
+~~~~~~~|*|*|~~|*||*|*|~|*|~~|*|*|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</pre>`,
+            tux: `<pre class="text-vice-yellow text-[10px] sm:text-xs leading-none">
+     .--.
+    |o_o |  <span class="text-vice-pink">LINUX TUX CODER @ VICE CITY</span>
+    |:_/ |  <span class="text-vice-cyan">MSc Student @ USP ICMC</span>
+   //   \\ \\ <span class="text-white">5x AWS & 1x GCP Certified</span>
+  (|     | )
+ /'\\_   _/\`\\
+ \\___)=(___/
+</pre>`,
+            sunset: `<span class="text-vice-amber font-bold">🌆 VICE CITY DUSK STATUS: ON</span>
+[LOG] Sunset Sun Gradient: Golden-Amber & Coral Pink
+[LOG] Illuminated Apartment Windows: Active
+[LOG] Shimmering Water Waves: Animated
+[LOG] Location: São Paulo, Brasil
+[STATUS] Ready to architect ultra-resilient multi-cloud systems!`,
+            contact: `Email: <a href="mailto:gleisonaps@hotmail.com" class="text-vice-pink underline">gleisonaps@hotmail.com</a>
+LinkedIn: <a href="https://linkedin.com/in/gleisonpires/" target="_blank" class="text-vice-cyan underline">linkedin.com/in/gleisonpires/</a>
+AWS Builder: <a href="https://builder.aws.com/community/@strovertzz" target="_blank" class="text-vice-yellow underline">builder.aws.com/community/@strovertzz</a>`
+        };
+
+        function runCommand(cmd) {
+            terminalInput.value = cmd;
+            handleTerminalSubmit(new Event('submit'));
+        }
+
+        function handleTerminalSubmit(e) {
+            e.preventDefault();
+            const rawVal = terminalInput.value.trim().toLowerCase();
+            if (!rawVal) return;
+
+            const line = document.createElement('div');
+            line.className = 'pt-1';
+            line.innerHTML = `<span class="text-vice-pink font-bold">tux@sp:~$</span> ${rawVal}`;
+            terminalOutput.appendChild(line);
+
+            const response = document.createElement('div');
+            response.className = 'pl-2 text-gray-300';
+
+            if (rawVal === 'clear') {
+                terminalOutput.innerHTML = '';
+            } else if (commands[rawVal]) {
+                response.innerHTML = commands[rawVal];
+                terminalOutput.appendChild(response);
+            } else {
+                response.innerHTML = `<span class="text-red-400">Command not found: '${rawVal}'. Type 'help' for options.</span>`;
+                terminalOutput.appendChild(response);
+            }
+
+            terminalInput.value = '';
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+    </script>
+</body>
+</html>
